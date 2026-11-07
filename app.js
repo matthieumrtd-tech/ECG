@@ -1,7 +1,40 @@
 const $=s=>document.querySelector(s);const app=$("#app");
 const subjects=[["ESH","Économie, sociologie et histoire","Microéconomie · macroéconomie · histoire de la pensée"],["Maths appliquées","Mathématiques","Algèbre · analyse · probabilités"],["Culture générale","Humanités","Philosophie · littérature · thème annuel"],["LV1","Langue vivante 1","Civilisation · traduction · expression"],["LV2","Langue vivante 2","Civilisation · traduction · expression"],["Informatique","Python & outils","Algorithmique · bases de données"]];
 let state=JSON.parse(localStorage.getItem("montaigneState")||'{"cards":[],"tasks":[],"done":0}');
-const save=()=>localStorage.setItem("montaigneState",JSON.stringify(state));
+const save=()=>{localStorage.setItem("montaigneState",JSON.stringify(state));if(currentUser)queueCloudSave();};
+let supabase=null,currentUser=null,saveTimer=null;
+const statusEl=document.querySelector("#sync-status");
+function status(t){if(statusEl)statusEl.textContent=t;}
+function msg(t){document.querySelector("#auth-message").textContent=t;}
+function setupAuth(){
+ const panel=$("#auth-panel");
+ $("#auth-open").onclick=()=>{panel.hidden=!panel.hidden;};
+ if(!window.supabase||!window.SUPABASE_URL||window.SUPABASE_URL.startsWith("COLLE_ICI")){
+   status("Compte à configurer");$("#auth-open").onclick=()=>{panel.hidden=false;msg("Configure config.js avec les clés Supabase.");};return;
+ }
+ supabase=window.supabase.createClient(window.SUPABASE_URL,window.SUPABASE_ANON_KEY);
+ $("#auth-signup").onclick=async()=>{const email=$("#auth-email").value.trim(),password=$("#auth-password").value;
+ if(!email||password.length<8){msg("E-mail valide et mot de passe de 8 caractères minimum.");return;}
+ const {data,error}=await supabase.auth.signUp({email,password});msg(error?error.message:"Inscription envoyée. Vérifie ton e-mail si la confirmation est activée.");};
+ $("#auth-signin").onclick=async()=>{const {data,error}=await supabase.auth.signInWithPassword({email:$("#auth-email").value.trim(),password:$("#auth-password").value});msg(error?error.message:"Connexion réussie.");if(data.user)await loadCloud(data.user);};
+ $("#auth-signout").onclick=async()=>{await supabase.auth.signOut();currentUser=null;$("#account-box").hidden=true;$("#auth-form").hidden=false;status("Données locales");msg("Déconnecté.");};
+ supabase.auth.getSession().then(({data})=>{if(data.session)loadCloud(data.session.user);});
+ supabase.auth.onAuthStateChange((event,session)=>{if(event==="SIGNED_OUT"){currentUser=null;status("Données locales");}});
+}
+async function loadCloud(user){
+ currentUser=user;$("#auth-form").hidden=true;$("#account-box").hidden=false;$("#account-email").textContent=user.email;status("Synchronisation…");
+ const {data,error}=await supabase.from("user_data").select("payload").eq("user_id",user.id).maybeSingle();
+ if(error){status("Erreur cloud");msg("Erreur : "+error.message);return;}
+ if(data&&data.payload){state=data.payload;localStorage.setItem("montaigneState",JSON.stringify(state));}
+ else {await supabase.from("user_data").upsert({user_id:user.id,payload:state});}
+ status("☁ Synchronisé");setupAuth();render();
+}
+function queueCloudSave(){clearTimeout(saveTimer);status("Sauvegarde…");saveTimer=setTimeout(async()=>{
+ if(!currentUser||!supabase)return;
+ const {error}=await supabase.from("user_data").upsert({user_id:currentUser.id,payload:state,updated_at:new Date().toISOString()});
+ status(error?"Erreur de synchro":"☁ Synchronisé");
+ },700);}
+
 let page="home",flip=false,cardIndex=0;
 function go(p){page=p;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===p));render()}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));

@@ -5,6 +5,17 @@
 <aside class="sidebar"><div class="brand"><div class="logo">M</div><div><b>MONTAIGNE</b><small>ECG · ESH & Maths appliquées</small></div></div>
 <nav id="nav"><button class="active" data-page="home">⌂ <span>Accueil</span></button><button data-page="courses">▤ <span>Cours</span></button><button data-page="cards">▣ <span>Flashcards</span></button><button data-page="annales">✎ <span>Annales</span></button><button data-page="planner">▦ <span>Planning</span></button></nav>
 <div class="sidebottom"><span class="dot"></span> Données sauvegardées sur cet appareil</div></aside>
-<main><header><div><p class="eyebrow">ESPACE DE TRAVAIL · ECG</p><h1 id="page-title">Bonjour, Matthieu 👋</h1></div><button class="btn ghost" id="export">↗ Exporter mes données</button></header>
-<section id="app"></section><footer>MONTAIGNE ECG <span>Prototype indépendant · gratuit · données locales</span></footer></main>
-<script src="app.js"></script></body></html>
+<main><header><div><p class="eyebrow">ESPACE DE TRAVAIL · ECG</p><h1 id="page-title">Bonjour, Matthieu 👋</h1></div><div class="header-actions"><span id="sync-status" class="sync-status">Données locales</span>
+<button class="btn ghost" id="auth-open">🔐 Se connecter</button>
+<button class="btn ghost" id="export">↗ Exporter mes données</button></div></header>
+<section id="auth-panel" class="card auth-panel" hidden>
+<h2 class="section-title">Compte & synchronisation</h2>
+<p class="muted">Crée un compte gratuit pour synchroniser tes flashcards, tâches et statistiques sur Mac et iPhone.</p>
+<div id="auth-form">
+<input id="auth-email" class="input" type="email" placeholder="Adresse e-mail" autocomplete="email">
+<input id="auth-password" class="input" type="password" placeholder="Mot de passe (8 caractères minimum)" autocomplete="current-password">
+<div class="toolbar"><button class="btn primary" id="auth-signin">Se connecter</button><button class="btn ghost" id="auth-signup">Créer un compte</button></div>
+<p class="muted" id="auth-message"></p></div>
+<div id="account-box" hidden><p id="account-email"></p><button class="btn ghost" id="auth-signout">Se déconnecter</button></div>
+</section><section id="app"></section><footer>MONTAIGNE ECG <span>Prototype indépendant · gratuit · données locales</span></footer></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="app.js"></script></body></html>

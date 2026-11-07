@@ -1,2 +1,3 @@
-window.SUPABASE_URL = "https://wnxgwqcedrndlhhayetg.supabase.co";
-window.SUPABASE_ANON_KEY = "sb_publishable_IB5GrRDy0N0ShP4RqZZ6CQ_xiGmtaa0";
+// Remplace ces valeurs par Supabase > Project Settings > API
+window.SUPABASE_URL = "COLLE_ICI_TON_PROJECT_URL";
+window.SUPABASE_ANON_KEY = "COLLE_ICI_TA_CLE_ANON";
