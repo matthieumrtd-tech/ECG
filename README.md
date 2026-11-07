@@ -10,6 +10,8 @@ Application personnelle de révisions ECG publiée sur GitHub Pages et reliée a
 - Import de documents TXT, Markdown, CSV simple, PDF et DOCX. PDF.js/Mammoth s’exécutent côté navigateur et sont chargés depuis un CDN gratuit lors de l’import.
 - Génération de cartes candidates uniquement depuis des blocs Q/R ou des lignes de définitions, avec aperçu avant ajout. Aucun contenu de cours n’est inventé.
 - PWA : manifeste, service worker de cache, icônes et métadonnées iOS.
+- Parcours de cours ECG préchargés : ESH (monnaie et financement) et mathématiques appliquées (suites usuelles et formes explicites), chacun avec cours, fiche synthèse, questions de khôlle et flashcards.
+- Écran d’accès obligatoire et allowlist Supabase dédiée au compte propriétaire. La migration `private-access-migration.sql` a été appliquée au projet Supabase ; elle n’autorise que le compte déjà présent dans la base.
 
 ## Import et données
 
@@ -20,3 +22,4 @@ Les cours sont extraits dans le navigateur puis enregistrés dans la sauvegarde 
 - Répétition espacée : variante de SM-2, pas FSRS.
 - Les cartes sont encore principalement en texte ; l’insertion d’images, la mise en forme riche et les tableaux dédiés restent à compléter.
 - Le partage de données en temps réel a été vérifié côté synchronisation du compte et ligne cloud ; un second appareil n’a pas encore été connecté pour un test de bout en bout.
+- GitHub Pages sert toujours les fichiers statiques publiquement ; l’interface et les données de l’application sont réservées au compte autorisé, tandis que le contenu pédagogique du bundle reste techniquement téléchargeable.
