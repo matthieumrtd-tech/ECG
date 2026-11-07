@@ -53,4 +53,5 @@ $("#taskform").onsubmit=e=>{e.preventDefault();let f=new FormData(e.target);stat
 function addTaskPrompt(name){state.tasks.push({name,subject:"ESH",done:false});save();alert("Objectif ajouté au planning.");}
 function esc(x){return String(x).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 $("#export").onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="mes-donnees-montaigne.json";a.click();URL.revokeObjectURL(a.href)};
+setupAuth();
 render();
