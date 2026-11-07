@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Montaigne ECG — Révisions intelligentes</title><meta name="theme-color" content="#090d18">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script>
+</head><body>
+<div class="app-shell">
+<aside class="sidebar"><div class="brand"><div class="brandmark">M</div><div><b>MONTAIGNE</b><small>ECG · STUDY OS</small></div></div>
+<nav id="nav"><button class="nav active" data-page="dashboard">◫ <span>Vue d'ensemble</span></button><button class="nav" data-page="revision">◉ <span>Révisions du jour</span><i id="dueBadge">0</i></button><button class="nav" data-page="cards">▤ <span>Flashcards</span></button><button class="nav" data-page="subjects">⌘ <span>Matières & cours</span></button><button class="nav" data-page="planner">▦ <span>Planning</span></button><button class="nav" data-page="stats">↗ <span>Progression</span></button></nav>
+<div class="side-bottom"><div class="mini-profile"><div class="avatar">MM</div><div><b>Matthieu Martin</b><small>Prépa ECG · Montaigne</small></div></div><button class="ghost" id="authOpen">↗ Compte & synchro</button></div></aside>
+<main class="main"><header><div><span class="eyebrow">TON ESPACE DE TRAVAIL</span><h1 id="pageTitle">Vue d'ensemble</h1></div><div class="header-actions"><span class="streak">🔥 <b id="streak">0</b> jours</span><button class="iconbtn" id="themeBtn" title="Thème">☼</button><button class="primary" id="quickReview">▶ Lancer une session</button></div></header>
+<section id="content"></section>
+<footer>MONTAIGNE ECG <span>Créé par Matthieu Martin</span></footer></main></div>
+<div class="modal hidden" id="modal"><div class="modalbox"><button class="close" id="closeModal">×</button><h2>Compte & synchronisation</h2><p class="muted">Connecte-toi pour retrouver tes données sur tous tes appareils.</p><label>Email<input id="email" type="email" placeholder="toi@email.com"></label><label>Mot de passe<input id="password" type="password" placeholder="8 caractères minimum"></label><div class="row"><button class="primary" id="signIn">Se connecter</button><button class="secondary" id="signUp">Créer un compte</button></div><p id="authMsg" class="muted"></p><button class="ghost" id="signOut">Déconnexion</button></div></div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script></body></html>
