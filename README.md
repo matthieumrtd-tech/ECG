@@ -1,23 +1,22 @@
 # Montaigne ECG
 
-Application personnelle de révisions ECG. Le dépôt d’origine était un prototype local avec répétition inspirée de SM-2 et une interface de compte sans synchronisation fonctionnelle.
+Application personnelle de révisions ECG publiée sur GitHub Pages et reliée au projet Supabase Montaigne ECG.
 
-## Préparation réalisée
+## Fonctions disponibles
 
-- PWA : manifeste, cache hors ligne, icônes SVG/PNG, métadonnées iOS.
-- Matières : mathématiques appliquées, ESH, anglais, allemand, culture générale.
-- Import JSON/CSV/TXT/Markdown avec ajout et déduplication des cartes.
-- Connexion Supabase par email, sauvegarde locale hors ligne, envoi au retour en ligne, fusion par identifiant et écoute temps réel.
-- Schéma SQL prévu avec RLS, accès propriétaire et fusion atomique par RPC.
+- Compte email/mot de passe Supabase, persistance locale, sauvegarde distante, fusion atomique par identifiant, suppressions tombstone et mises à jour temps réel. Le schéma avec RLS propriétaire a été appliqué au projet.
+- Dashboard, matières, planning, statistiques, répétition espacée inspirée de SM-2, création/modification/suppression de flashcards.
+- Chapitres et sous-chapitres, cours et fiches éditables.
+- Import de documents TXT, Markdown, CSV simple, PDF et DOCX. PDF.js/Mammoth s’exécutent côté navigateur et sont chargés depuis un CDN gratuit lors de l’import.
+- Génération de cartes candidates uniquement depuis des blocs Q/R ou des lignes de définitions, avec aperçu avant ajout. Aucun contenu de cours n’est inventé.
+- PWA : manifeste, service worker de cache, icônes et métadonnées iOS.
 
-## Avant d’utiliser le cloud
+## Import et données
 
-Le client est configuré avec l’URL du projet et sa clé publishable. Le schéma `supabase-schema.sql` a été exécuté sur le projet Supabase Montaigne ECG. Une vérification HTTP anonyme a confirmé que la table et la fonction RPC sont refusées au rôle `anon`. Aucun mot de passe de base ni clé secrète n’est présent dans les fichiers.
+Les cours sont extraits dans le navigateur puis enregistrés dans la sauvegarde Supabase lorsque le compte est connecté. L’import PDF/DOCX nécessite une connexion internet pour télécharger le lecteur open source. Une image de cours scannée sans couche texte ne peut pas être transcrite automatiquement. Les documents sont limités à 20 Mo et 200 000 caractères extraits.
 
-Créer un compte depuis **Compte & synchro**. Si Supabase demande la confirmation email, confirmer l’adresse avant la première connexion. Les données locales sont fusionnées avec celles du compte ; exporte un JSON avant une première synchronisation si tu veux garder une sauvegarde supplémentaire.
+## Limites restantes
 
-## Limites actuelles
-
-- Répétition espacée : variante simplifiée de SM-2, pas FSRS.
-- PDF/DOCX et création automatique de cartes à partir des cours ne sont pas implémentés.
-- Le déploiement GitHub Pages de cette copie n’a pas été effectué. Le flux de synchronisation n’a pas encore été testé avec un compte utilisateur authentifié.
+- Répétition espacée : variante de SM-2, pas FSRS.
+- Les cartes sont encore principalement en texte ; l’insertion d’images, la mise en forme riche et les tableaux dédiés restent à compléter.
+- Le partage de données en temps réel a été vérifié côté synchronisation du compte et ligne cloud ; un second appareil n’a pas encore été connecté pour un test de bout en bout.
