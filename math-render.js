@@ -69,12 +69,9 @@
     const root = document.querySelector('#content');
     if (!root) return;
     const targets = [];
-    root.querySelectorAll('.cardhead .tag').forEach(tag => {
-      if (tag.textContent.trim() !== 'Mathématiques appliquées') return;
-      const card = tag.closest('.card');
-      const flashcard = card?.querySelector('.flashcard');
-      const heading = flashcard?.querySelector('h2');
-      if (!flashcard || !heading) return;
+    root.querySelectorAll('.flashcard h2.math-expression').forEach(heading => {
+      const flashcard = heading.closest('.flashcard');
+      if (!flashcard) return;
       flashcard.classList.add('math-card');
       if (heading.dataset.mathSource === undefined) {
         heading.dataset.mathSource = heading.textContent;
@@ -104,5 +101,7 @@
   const root = document.querySelector('#content');
   if (root) new MutationObserver(typeset).observe(root, {childList:true,subtree:true});
   document.addEventListener('mathjax-ready', typeset);
+  document.addEventListener('DOMContentLoaded', typeset, {once:true});
+  setInterval(typeset, 500);
   typeset();
 })();
